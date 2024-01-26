@@ -1,7 +1,5 @@
 # Backbase assignment
 
-Table of Contents
-
 ## About the Project
 
 This is a sample application for a technical assignment.
