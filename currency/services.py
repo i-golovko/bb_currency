@@ -183,7 +183,7 @@ def get_latest_from_provider(
             ),
         )
         return Decimal(
-            raw_data[source_currency_code] / raw_data[exchanged_currency_code]
+            raw_data[exchanged_currency_code] / raw_data[source_currency_code]
         )
     return adapter.get_latest_rate(
         source_currency_code=source_currency_code,

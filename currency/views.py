@@ -108,7 +108,7 @@ class CurrencyConverterView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
         res = amount * rate
-        return Response(res)
+        return Response({"result": res})
 
 
 class TWRRView(APIView):
