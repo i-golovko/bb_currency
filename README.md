@@ -23,9 +23,9 @@ It implements following features:
 ## Installation
 ```
 docker compose up -d --build
+docker compose exec web python manage.py migrate
 docker compose exec web python manage.py createsuperuser
 docker compose exec web python manage.py loaddata fixtures/seed_rates.json
-docker compose exec web python manage.py migrate
 docker compose exec web python manage.py collectstatic --no-input
 ```
 
