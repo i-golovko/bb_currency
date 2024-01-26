@@ -1,0 +1,122 @@
+[
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 1,
+    "fields": {
+      "source_currency": "1",
+      "exchanged_currency": "2",
+      "rate_value": "1.10",
+      "valuation_date": "2024-01-25"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 2,
+    "fields": {
+      "source_currency": "2",
+      "exchanged_currency": "1",
+      "rate_value": "1.10",
+      "valuation_date": "2024-01-25"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 3,
+    "fields": {
+      "source_currency": "1",
+      "exchanged_currency": "3",
+      "valuation_date": "2024-01-25",
+      "rate_value": "0.873883"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 4,
+    "fields": {
+      "source_currency": "1",
+      "exchanged_currency": "4",
+      "valuation_date": "2024-01-25",
+      "rate_value": "0.796633"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 5,
+    "fields": {
+      "source_currency": "2",
+      "exchanged_currency": "3",
+      "valuation_date": "2024-01-25",
+      "rate_value": "0.739488"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 6,
+    "fields": {
+      "source_currency": "2",
+      "exchanged_currency": "4",
+      "valuation_date": "2024-01-25",
+      "rate_value": "0.911917"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 7,
+    "fields": {
+      "source_currency": "4",
+      "exchanged_currency": "1",
+      "valuation_date": "2024-01-25",
+      "rate_value": "1.261938"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 8,
+    "fields": {
+      "source_currency": "4",
+      "exchanged_currency": "2",
+      "valuation_date": "2024-01-25",
+      "rate_value": "1.19125"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 9,
+    "fields": {
+      "source_currency": "4",
+      "exchanged_currency": "3",
+      "valuation_date": "2024-01-25",
+      "rate_value": "0.975074"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 10,
+    "fields": {
+      "source_currency": "3",
+      "exchanged_currency": "1",
+      "valuation_date": "2024-01-25",
+      "rate_value": "1.01533"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 11,
+    "fields": {
+      "source_currency": "3",
+      "exchanged_currency": "2",
+      "valuation_date": "2024-01-25",
+      "rate_value": "1.25672"
+    }
+  },
+  {
+    "model": "currency.currencyexchangerate",
+    "pk": 12,
+    "fields": {
+      "source_currency": "3",
+      "exchanged_currency": "4",
+      "valuation_date": "2024-01-25",
+      "rate_value": "0.940589"
+    }
+  }
+]

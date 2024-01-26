@@ -1,0 +1,68 @@
+{% extends "admin/base_site.html" %}
+
+{% block style %}
+  .admin-form {
+    width: 50%; 
+    margin: 0 auto; 
+    padding: 20px; 
+    box-sizing: border-box;
+  }
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  label {
+    width: 40%;
+  }
+
+{% endblock %}
+
+{% block content %}
+  <div class="admin-form">
+    <h1 style="text-align: center;">Currency Converter</h1>
+    <form method="post" action="{% url 'admin:admin-converter' %}" style="display: flex; flex-direction: column; gap: 15px;">
+      {% csrf_token %}
+      <div class="form-row">
+        <label for="id_source_currency">Source Currency:</label>
+        {{ form.source_currency }}
+      </div>
+      <div class="form-row">
+        <label for="id_exchanged_currency">Exchanged Currency:</label>
+        {{ form.exchanged_currency }}
+      </div>
+      <div class="form-row">
+        <label for="id_amount">Amount:</label>
+        {{ form.amount }}
+      </div>
+      <div class="form-row">
+        <button type="submit" style="padding: 5px 15px; margin-right: 10px;">Convert</button>
+        <button type="submit" name="action" value="reset" style="padding: 5px 15px;">Reset</button>
+      </div>
+      {% if result %}
+      <div class="form-row" style="text-align: center; margin-top: 15px;">
+        <strong>Conversion Result:</strong> {{ result }}
+      </div>
+    {% endif %}
+    </form>
+  </div>
+
+
+  {{ block.super }}
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      const sourceCurrencySelector = document.querySelector('#id_source_currency');
+      const exchangedCurrencySelector = document.querySelector('#id_exchanged_currency');
+
+      sourceCurrencySelector.addEventListener('change', function() {
+        const selectedCurrency = this.value;
+        const exchangedOptions = exchangedCurrencySelector.options;
+
+        for (let option of exchangedOptions) {
+          option.disabled = option.value === selectedCurrency;
+        }
+      });
+    });
+  </script>
+{% endblock %}

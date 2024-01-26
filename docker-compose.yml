@@ -1,0 +1,66 @@
+services:
+  web:
+    build: ./
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
+
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${DJANGO_DB_USER}
+      - POSTGRES_PASSWORD=${DJANGO_DB_PASS}
+      - POSTGRES_DB=${DJANGO_DB_NAME}
+    ports:
+      - 5432:5432
+
+  celery:
+    build: .
+    command: celery -A bb_currency worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+
+  celery-beat:
+    build: .
+    command: celery -A bb_currency beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - POSTGRES_HOST=${DJANGO_DB_HOST}
+      - POSTGRES_USER=${DJANGO_DB_USER}
+      - POSTGRES_PASSWORD=${DJANGO_DB_PASS}
+      - POSTGRES_DB=${DJANGO_DB_NAME}
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+
+  flower:
+    image: mher/flower:0.9.7
+    command: flower --broker=redis://redis:6379 --port=5555
+    ports:
+      - 5555:5555
+    depends_on:
+      - redis
+volumes:
+  postgres_data:
+  redis:

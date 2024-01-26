@@ -1,0 +1,91 @@
+{% extends "admin/base_site.html" %}
+
+{% block style %}
+  .admin-form {
+    width: 50%; 
+    margin: 0 auto; 
+    padding: 20px; 
+    box-sizing: border-box;
+  }
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  label {
+    width: 40%;
+  }
+
+{% endblock %}
+
+{% block content %}
+<div class="admin-form">
+    <h1 style="text-align: center;">Currency exchange rates comparison (base EUR)</h1>
+    <form method="post" action="{% url 'admin:admin-chart' %}" style="display: flex; flex-direction: column; gap: 15px;">
+      {% csrf_token %}
+      <div class="form-row">
+        <label for="id_currency">Currency:</label>
+        {{ form.currency }}
+      </div>
+      <div class="form-row">
+        <button type="submit" style="padding: 5px 15px; margin-right: 10px;">Plot</button>
+        <button type="submit" name="action" value="reset" style="padding: 5px 15px;">Reset</button>
+      </div>
+    </form>
+  </div>
+<canvas id="CurrencyChart" width="800" height="400"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('CurrencyChart').getContext('2d');
+    const compareChart = new Chart(ctx, {
+        type: 'line',
+        data: {},
+        options: {
+            scales: {
+                y: {
+                  type: 'linear',
+                    beginAtZero: false,
+                    ticks: {
+                      precision: 6,
+                    },
+                }
+            }
+        }
+    });
+    </script>
+    <script>
+      const colorPalette = ['#ef767a', '#456990', '#49beaa']
+      document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var formData = new FormData(e.target, e.submitter);
+        if(formData.get("action") == "reset") {
+          compareChart.data = {};
+          compareChart.update();
+          return
+        }
+        fetch(window.location.href, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          }
+        }).then(response => response.json())
+          .then(newData => {
+            if (compareChart.data.datasets.some(l =>l.label === newData['label'])) {
+              return
+            };
+            compareChart.data.labels = newData['date_labels'];
+            compareChart.data.datasets[compareChart.data.datasets.length] = {
+              label: newData['label'],
+              data: newData['data'],
+              borderColor: colorPalette[compareChart.data.datasets.length-1],
+              backgroundColor: colorPalette[compareChart.data.datasets.length-1],
+              borderWidth: 1,
+            };
+            compareChart.update();
+          }); 
+      });
+    </script> 
+{% endblock %}
